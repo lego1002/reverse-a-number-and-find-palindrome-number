@@ -1,0 +1,61 @@
+//==================================================
+// PROGRAMMER: TAI TZU YU
+// DATE: 2023/10/15
+// FILE NAME: HW03CB12611017
+// DESCRIPTION: reverse a number to see if it is a palindrome number
+//==================================================
+
+#include <iostream>
+int answer1; // Store the total number of Lychrel numbers below 5,000
+bool isPalindrome(long long);
+long long reversing(long long);
+
+int main()
+{
+    long long input_num;
+    for (input_num = 0; input_num <= 5000; input_num ++)
+    {
+        long long temp = input_num; //put input_num's value in temp so that input_num will be stable!
+        int times;
+        int isLychrel = 1; 
+        /*it is convenient to verify whether the input_num is a Lychrel number 
+          by another variable that is different from a variable in a for loop(times)*/
+        temp += reversing(temp);
+        for(times = 0; times <= 30; times ++){
+            if(isPalindrome(temp)){
+                isLychrel = 0;
+                break;
+            }
+            temp += reversing(temp);
+        }
+        if(isLychrel){
+            answer1++;
+        }
+    }
+    std::cout << answer1;
+    return 0;
+}
+
+bool isPalindrome(long long x)
+{
+    if (x == reversing(x))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+long long reversing(long long input)
+{
+    long long remainder = 0, reverse = 0;
+    while (input > 0)
+    {
+        remainder = input % 10;             // obtain the last digit of input number
+        reverse = reverse * 10 + remainder; // refresh the reverse number
+        input = input / 10;                 // cut the last digit of input number
+    }
+    return reverse;
+}
